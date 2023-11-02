@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 import requests
 
@@ -5,7 +6,10 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def index():
-    response = requests.get("https://evilinsult.com/generate_insult.php?lang=en&type=json")
+    insult_api_url = os.environ["INSULT_API_URL"] 
+ # github api:https://evilinsult.com
+    response = requests.get(f"{insult_api_url}")
+    
 
     if response.status_code == 200:
         data = response.json()
